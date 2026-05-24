@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapters — ASAAL</title>
+<meta name="description" content="20 ASAAL chapters across 11 states. Find your nearest chapter on our interactive map.">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .grid-empty { text-align:center; padding: var(--s-7); color: var(--ink-3); font-family: var(--font-mono); }
+
+  /* ============================================================
+     Interactive US Chapter Map — premium dark-themed centerpiece
+     ============================================================ */
+  .us-map-wrap {
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 60% at 30% 30%, rgba(14, 47, 92, .35) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 75% 75%, rgba(185, 28, 38, .12) 0%, transparent 60%),
+      linear-gradient(140deg, #0B1424 0%, #07101D 50%, #050A13 100%);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  /* Subtle dotted-grid backdrop */
+  .us-map-wrap::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 30%, transparent 80%);
+  }
+  /* Aurora wash */
+  .us-map-wrap::after {
+    content: "";
+    position: absolute; left: -20%; top: -10%; width: 80%; height: 50%;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(229,155,34,.10) 0%, transparent 60%);
+    pointer-events: none;
+    filter: blur(20px);
+  }
+  .us-map-wrap__header {
+    position: relative; z-index: 2;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .us-map-wrap__header h3 {
+    color: #fff; margin: 0 0 6px;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.4vw, 30px);
+    letter-spacing: -0.018em;
+  }
+  .us-map-wrap__header p {
+    color: rgba(255,255,255,.65); font-size: 14px; max-width: 64ch; margin: 0;
+    line-height: 1.55;
+  }
+  .us-map-wrap__hint {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; color: rgba(229,155,34,.85);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border: 1px solid rgba(229,155,34,.3);
+    border-radius: 999px; background: rgba(229,155,34,.06);
+    white-space: nowrap;
+  }
+  .us-map-wrap__hint::before { content:""; width:6px; height:6px; border-radius:50%; background: var(--asaal-saffron); box-shadow: 0 0 8px var(--asaal-saffron); }
+
+  .us-map {
+    position: relative; z-index: 2;
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 960 / 600;
+  }
+  .us-map .state {
+    fill: #141B2C;
+    stroke: #0B1424;
+    stroke-width: 0.5;
+    transition: fill .25s ease;
+  }
+  .us-map .state.has-chapter {
+    fill: #1F4F9F;
+  }
+  .us-map .state.has-chapter:hover {
+    fill: #2E68C0;
+  }
+
+  /* Connection lines — slow, calm */
+  .connection-line {
+    fill: none;
+    stroke: rgba(229,155,34,.4);
+    stroke-width: 1.2;
+    stroke-dasharray: 4 5;
+    stroke-linecap: round;
+    pointer-events: none;
+    animation: dashflow 60s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(229,155,34,.3));
+  }
+  @keyframes dashflow {
+    to { stroke-dashoffset: -180; }
+  }
+
+  /* Chapter markers — static, click-to-select. No continuous animation.
+     NOTE: We use the standalone CSS `scale` property (not `transform: scale()`)
+     because each <g> already carries an SVG `transform="translate(x,y)"` attribute,
+     and CSS `transform` would override it — causing markers to jump to (0,0) on hover. */
+  .chapter-marker {
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: scale 200ms cubic-bezier(.2,.7,.2,1);
+  }
+  .chapter-marker:hover { scale: 1.18; }
+  .chapter-marker:focus-visible { outline: none; }
+  .chapter-marker:focus-visible .chapter-marker__dot { stroke: #fff; stroke-width: 2.5; }
+
+  .chapter-marker__dot {
+    fill: var(--asaal-saffron);
+    stroke: #fff;
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 5px rgba(229,155,34,.6));
+    transition: filter 200ms ease, stroke-width 200ms ease;
+  }
+  .chapter-marker:hover .chapter-marker__dot {
+    filter: drop-shadow(0 0 10px rgba(229,155,34,1));
+    stroke-width: 2;
+  }
+
+  /* Selected — static gold halo (no breathing) */
+  .chapter-marker__halo {
+    fill: var(--asaal-saffron);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: halo-in 220ms cubic-bezier(.2,.7,.2,1) forwards;
+    pointer-events: none;
+  }
+  @keyframes halo-in {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 0.32; transform: scale(1); }
+  }
+  .chapter-marker.is-selected .chapter-marker__dot {
+    filter: drop-shadow(0 0 14px rgba(229,155,34,1));
+    stroke-width: 2.4;
+  }
+
+  /* New chapter (gold star) */
+  .chapter-marker__star {
+    fill: #FFD166;
+    stroke: #fff;
+    stroke-width: 1.2;
+    filter: drop-shadow(0 0 6px rgba(255,209,102,.7));
+    transition: filter 200ms ease;
+  }
+  .chapter-marker--new:hover .chapter-marker__star {
+    filter: drop-shadow(0 0 12px rgba(255,209,102,1));
+  }
+  .chapter-marker--new.is-selected .chapter-marker__halo { fill: #FFD166; }
+
+  /* Future markers */
+  .chapter-marker--future .chapter-marker__dot {
+    fill: rgba(0,0,0,0);
+    stroke: rgba(255,255,255,.55);
+    stroke-width: 1.5;
+    stroke-dasharray: 2.5 2.5;
+    filter: none;
+  }
+  .chapter-marker--future:hover .chapter-marker__dot {
+    stroke: #fff;
+    filter: drop-shadow(0 0 4px rgba(255,255,255,.4));
+  }
+  .chapter-marker--future.is-selected .chapter-marker__halo {
+    fill: rgba(255,255,255,.6);
+  }
+
+  /* Spider markers (cluster-expanded) — fade in */
+  .chapter-marker--spider {
+    animation: spider-in 280ms cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes spider-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Cluster badge */
+  .chapter-cluster {
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: scale 200ms cubic-bezier(.2,.7,.2,1);
+  }
+  .chapter-cluster:hover { scale: 1.08; }
+  .chapter-cluster__halo {
+    fill: var(--asaal-saffron);
+    opacity: 0.18;
+  }
+  .chapter-cluster__dot {
+    fill: var(--asaal-saffron);
+    stroke: #fff;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 10px rgba(229,155,34,.85));
+  }
+  .chapter-cluster__count {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 13px;
+    fill: #0F1014;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Cluster spokes */
+  .cluster-spoke {
+    stroke: rgba(229,155,34,.45);
+    stroke-width: 1.2;
+    stroke-dasharray: 2 3;
+    pointer-events: none;
+    animation: spoke-in 280ms cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes spoke-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Cluster collapse button (center X) */
+  .cluster-close {
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: scale 200ms cubic-bezier(.2,.7,.2,1);
+  }
+  .cluster-close:hover { scale: 1.15; }
+  .cluster-close__bg {
+    fill: rgba(15, 21, 36, .92);
+    stroke: rgba(255,255,255,.4);
+    stroke-width: 1.5;
+  }
+  .cluster-close__icon {
+    stroke: #fff;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  /* Glassmorphism popup card — fade + slide 8px, 200ms, then STATIC */
+  .chapter-card-popup {
+    position: absolute;
+    width: 300px;
+    background: rgba(15, 21, 36, .88);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 14px;
+    padding: 18px;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 13px;
+    box-shadow: 0 30px 60px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+    pointer-events: none;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 200ms ease-out, transform 200ms ease-out;
+    z-index: 10;
+  }
+  .chapter-card-popup.is-on {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .popup-close {
+    position: absolute; top: 10px; right: 10px;
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 50%;
+    color: rgba(255,255,255,.7);
+    cursor: pointer;
+    font-size: 18px; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 150ms, color 150ms, border-color 150ms;
+    padding: 0;
+  }
+  .popup-close:hover {
+    background: rgba(255,255,255,.14);
+    color: #fff;
+    border-color: rgba(255,255,255,.3);
+  }
+  .popup-header {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 14px; padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .popup-seal {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #fff; padding: 2px; flex: none;
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .popup-sub {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--asaal-saffron); margin-bottom: 4px;
+  }
+  .popup-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 16px; color: #fff; margin: 0; line-height: 1.2;
+  }
+  .popup-dl {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 8px 16px; margin: 0 0 14px;
+  }
+  .popup-dl dt {
+    color: rgba(255,255,255,.5);
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: .08em; text-transform: uppercase;
+    align-self: center;
+  }
+  .popup-dl dd {
+    margin: 0; color: #fff; font-size: 13px; font-weight: 500;
+  }
+  .popup-body { color: rgba(255,255,255,.75); margin: 0 0 12px; font-size: 13px; }
+  .popup-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--asaal-saffron);
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    text-decoration: none;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(229,155,34,.12);
+    border: 1px solid rgba(229,155,34,.3);
+    transition: background .15s, border-color .15s;
+  }
+  .popup-cta:hover {
+    background: rgba(229,155,34,.22);
+    border-color: var(--asaal-saffron);
+    text-decoration: none;
+    color: #fff;
+  }
+  .popup-cta span { transition: transform .15s; }
+  .popup-cta:hover span { transform: translateX(3px); }
+
+  /* Legend */
+  .map-legend2 {
+    position: relative; z-index: 2;
+    display: flex; gap: 22px; flex-wrap: wrap;
+    margin-top: 18px; padding: 14px 18px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    font-family: var(--font-mono); font-size: 12px;
+    color: rgba(255,255,255,.7);
+  }
+  .map-legend2__item { display: inline-flex; align-items: center; gap: 8px; }
+  .map-legend2__swatch {
+    width: 12px; height: 12px; border-radius: 50%;
+    flex: none;
+  }
+  .map-legend2__swatch--state {
+    width: 16px; height: 12px; border-radius: 2px;
+    background: #1F4F9F;
+  }
+  .map-legend2__swatch--active {
+    background: var(--asaal-saffron);
+    box-shadow: 0 0 6px rgba(229,155,34,.7);
+  }
+  .map-legend2__swatch--new {
+    background: transparent;
+    width: 14px; height: 14px;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    background: #FFD166;
+  }
+  .map-legend2__swatch--future {
+    background: transparent;
+    border: 1.5px dashed rgba(255,255,255,.55);
+  }
+
+  #map-loading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.5);
+    font-family: var(--font-mono); font-size: 13px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  #map-loading::before {
+    content: ""; width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,.2);
+    border-top-color: var(--asaal-saffron);
+    border-radius: 50%;
+    animation: spinner .8s linear infinite;
+    margin-right: 10px;
+  }
+  @keyframes spinner { to { transform: rotate(360deg); } }
+
+  /* Mobile bottom sheet */
+  @media (max-width: 760px) {
+    .us-map-wrap { padding: 20px 18px 18px; }
+    .chapter-card-popup {
+      position: fixed; left: 16px; right: 16px; bottom: 16px;
+      width: auto; max-width: none;
+      transform: translateY(120%);
+      box-shadow: 0 -10px 50px rgba(0,0,0,.6);
+    }
+    .chapter-card-popup.is-on { transform: translateY(0); }
+    .map-legend2 { gap: 14px; font-size: 11px; }
+    .chapter-cluster__count { font-size: 14px; }
+  }
+
+  /* Side aside on chapters page */
+  .map-side { display: flex; flex-direction: column; gap: var(--s-4); }
+  .map-side .card { flex: none; }
+  @media (max-width: 980px) {
+    .us-chapters-row { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header" data-active="chapters"></header>
+
+<!-- Page header -->
+<section class="section tight" style="border-bottom: 1px solid var(--line); padding-bottom: var(--s-7);">
+  <div class="container">
+    <span class="eyebrow">§ Chapters</span>
+    <div class="grid grid-2" style="gap: var(--s-7); margin-top: var(--s-3); align-items: end;">
+      <h1 style="margin: 0;">20 chapters. <br>11 states. <em style="font-style:normal; color: var(--asaal-red);">One movement.</em></h1>
+      <p class="lede">ASAAL chapters organize on the ground where South Asian workers live, work, and vote. Find yours on the interactive map, filter by region, or search by name. Each chapter runs its own voter drives, advocacy work, and community events — all coordinated through the national office.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Interactive map + summary -->
+<section class="section tight">
+  <div class="container">
+    <div class="grid us-chapters-row" style="grid-template-columns: 1.65fr 1fr; gap: var(--s-6); align-items: stretch;">
+
+      <div class="us-map-wrap">
+        <div class="us-map-wrap__header">
+          <div>
+            <h3>Chapters across America</h3>
+            <p>Supporting South Asian American communities nationwide through education, activism, participation, and leadership.</p>
+          </div>
+          <span class="us-map-wrap__hint">Click a marker</span>
+        </div>
+
+        <div style="position: relative;">
+          <div id="map-loading">Loading map…</div>
+          <svg id="us-map-svg" class="us-map" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive map of ASAAL chapters across the United States">
+            <defs>
+              <filter id="state-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g id="states-group"></g>
+            <g id="connections-group"></g>
+            <g id="markers-group"></g>
+          </svg>
+        </div>
+
+        <div class="map-legend2">
+          <span class="map-legend2__item"><span class="map-legend2__swatch map-legend2__swatch--state"></span>State with chapter</span>
+          <span class="map-legend2__item"><span class="map-legend2__swatch map-legend2__swatch--active"></span>Active chapter</span>
+          <span class="map-legend2__item"><span class="map-legend2__swatch map-legend2__swatch--new"></span>New chapter (2023+)</span>
+          <span class="map-legend2__item"><span class="map-legend2__swatch map-legend2__swatch--future"></span>In formation / planned</span>
+        </div>
+
+        <div id="chapter-popup" class="chapter-card-popup" role="dialog" aria-hidden="true"></div>
+      </div>
+
+      <aside class="map-side">
+        <div class="card">
+          <span class="eyebrow">By the numbers</span>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); margin-top: var(--s-4);">
+            <div class="stat"><div class="stat__num">20</div><div class="stat__label">Active chapters</div></div>
+            <div class="stat"><div class="stat__num">11</div><div class="stat__label">States covered</div></div>
+            <div class="stat"><div class="stat__num">2</div><div class="stat__label">New chapters 2023+</div></div>
+            <div class="stat"><div class="stat__num">6</div><div class="stat__label">In formation</div></div>
+          </div>
+        </div>
+        <div class="card" style="background: var(--asaal-blue); color: #fff; border-color: var(--asaal-blue); flex: 1;">
+          <span class="tag is-saffron">Start one</span>
+          <h3 class="card__title" style="color:#fff; margin-top: var(--s-3);">Don't see your area?</h3>
+          <p style="color: rgba(255,255,255,.85);">Start a new ASAAL chapter where you live. We'll help with onboarding, training, and toolkits to get organized — wherever you are.</p>
+          <a href="index.html#contact" class="btn btn--saffron" style="margin-top: var(--s-3);">Get in touch →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Filter + grid -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="eyebrow is-blue">All chapters</span>
+        <h2>Find your chapter.</h2>
+      </div>
+    </div>
+
+    <div class="filterbar" id="filterbar" style="margin-bottom: var(--s-5);">
+      <input type="search" id="chapter-search" placeholder="Search chapters by name, state, or city…" aria-label="Search chapters">
+      <div class="flex wrap" style="gap: 6px;">
+        <button class="chip is-active" data-region="all">All <span class="chip__count">20</span></button>
+        <button class="chip" data-region="Northeast">Northeast <span class="chip__count">11</span></button>
+        <button class="chip" data-region="South">South <span class="chip__count">6</span></button>
+        <button class="chip" data-region="Midwest">Midwest <span class="chip__count">1</span></button>
+        <button class="chip" data-region="West">West <span class="chip__count">1</span></button>
+        <button class="chip" data-region="National">Professional <span class="chip__count">1</span></button>
+      </div>
+    </div>
+
+    <!-- State filter (secondary row) -->
+    <div class="filterbar" id="state-filterbar" style="margin-bottom: var(--s-5); padding-top: var(--s-3); border-top: 1px dashed var(--line);">
+      <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-right: var(--s-3); display: inline-flex; align-items: center;">Filter by state</div>
+      <div class="flex wrap" style="gap: 6px;" id="state-chips">
+        <button class="chip is-active" data-state="all">All States</button>
+        <!-- state chips injected by render script -->
+      </div>
+    </div>
+
+    <div class="grid grid-4" id="chapter-grid"></div>
+    <div class="grid-empty" id="grid-empty" style="display:none;">No chapters match those filters. Try clearing the search.</div>
+  </div>
+</section>
+
+<!-- Individual chapter anchors -->
+<section class="section muted">
+  <div class="container">
+    <h2 style="margin-bottom: var(--s-6);">Chapter directory</h2>
+    <div id="chapter-anchors" class="grid grid-2"></div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+<div id="tweaks"></div>
+
+<script src="js/chapters-data.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Filter + grid + anchor rendering -->
+<script>
+  (function () {
+    const chapters = window.ASAAL_CHAPTERS;
+    if (!chapters) return;
+    const grid = document.getElementById('chapter-grid');
+    const empty = document.getElementById('grid-empty');
+    const search = document.getElementById('chapter-search');
+    const chips = document.querySelectorAll('#filterbar .chip');
+
+    let activeRegion = 'all';
+    let activeState  = 'all';
+    let query = '';
+
+    function render() {
+      const filtered = chapters.filter(c => {
+        const matchesRegion = activeRegion === 'all' || c.region === activeRegion;
+        const matchesState  = activeState  === 'all' || c.state  === activeState;
+        const q = query.trim().toLowerCase();
+        const matchesQuery = !q
+          || c.name.toLowerCase().includes(q)
+          || c.state.toLowerCase().includes(q)
+          || c.region.toLowerCase().includes(q)
+          || (c.city || '').toLowerCase().includes(q);
+        return matchesRegion && matchesState && matchesQuery;
+      });
+      empty.style.display = filtered.length ? 'none' : 'block';
+      grid.innerHTML = filtered.map(c => `
+        <a href="${c.anchor}" class="chapter-card">
+          <div class="ph" style="background: linear-gradient(135deg, ${bannerGradient(c.bannerColor)});"><div class="ph__label">${c.name} chapter photo</div></div>
+          <div class="chapter-card__body">
+            <div class="chapter-card__region">${c.region} · ${c.state === '—' ? c.city : c.state}</div>
+            <div class="chapter-card__name">${c.name}</div>
+            <p style="font-size: 14px; color: var(--ink-3); margin: 0;">${c.lead}</p>
+            <div class="chapter-card__meta">
+              <span>${c.members || ''} members${c.founded ? ' · est. ' + c.founded : ''}</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // Subtle brand-color tint for the placeholder banner — the user can drop
+    // a real photo in later by adding `c.photo` to chapters-data.js.
+    function bannerGradient(key) {
+      switch (key) {
+        case 'red':     return 'rgba(185, 28, 38, 0.28) 0%, rgba(185, 28, 38, 0.05) 100%';
+        case 'saffron': return 'rgba(229, 155, 34, 0.28) 0%, rgba(229, 155, 34, 0.05) 100%';
+        case 'blue':    return 'rgba(20, 68, 137, 0.28) 0%, rgba(20, 68, 137, 0.05) 100%';
+        default:        return 'rgba(122, 144, 174, 0.18) 0%, rgba(122, 144, 174, 0.04) 100%';
+      }
+    }
+
+    function setRegion(region) {
+      activeRegion = region;
+      chips.forEach(ch => ch.classList.toggle('is-active', ch.getAttribute('data-region') === region));
+      render();
+      // Smooth scroll into view
+      const target = document.getElementById('chapter-grid');
+      if (target) target.closest('.section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // Expose for the map to call back
+    window.ASAAL_FILTER_REGION = setRegion;
+
+    search.addEventListener('input', e => { query = e.target.value; render(); });
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        activeRegion = chip.getAttribute('data-region');
+        render();
+      });
+    });
+
+    // Build state filter chips from the data — survives roster updates
+    const stateChipRow = document.getElementById('state-chips');
+    const states = Array.from(new Set(chapters.map(c => c.state))).sort();
+    states.forEach(st => {
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.setAttribute('data-state', st);
+      const count = chapters.filter(c => c.state === st).length;
+      btn.innerHTML = (st === '—' ? 'National' : st) + ` <span class="chip__count">${count}</span>`;
+      stateChipRow.appendChild(btn);
+    });
+    const stateChips = stateChipRow.querySelectorAll('.chip');
+    stateChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        stateChips.forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        activeState = chip.getAttribute('data-state');
+        render();
+      });
+    });
+
+    // Chapter directory anchors
+    const anchors = document.getElementById('chapter-anchors');
+    anchors.innerHTML = chapters.map(c => `
+      <a id="${c.id}" href="${c.anchor}" class="card" style="display: grid; grid-template-columns: 90px 1fr; gap: var(--s-4); align-items: center; text-decoration: none !important;">
+        <div class="ph" style="aspect-ratio: 1; width: 90px; background: linear-gradient(135deg, ${bannerGradient(c.bannerColor)});"><div class="ph__label" style="font-size: 9px;">${c.state === '—' ? 'NAT' : c.state}</div></div>
+        <div>
+          <div class="chapter-card__region">${c.region} · ${c.state === '—' ? c.city : c.state}</div>
+          <h4 style="font-size: var(--fs-h5); margin: 4px 0;">${c.name} Chapter</h4>
+          <p style="font-size: 14px; color: var(--ink-3); margin: 0 0 6px;">${c.lead}</p>
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--asaal-red); letter-spacing: 0.08em; text-transform: uppercase;">View chapter →</div>
+        </div>
+      </a>
+    `).join('');
+
+    render();
+  })();
+</script>
+
+<!-- Map dependencies: d3-geo + topojson + us-atlas -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="js/chapters-map.js"></script>
+</body>
+</html>
