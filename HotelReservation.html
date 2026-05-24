@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Reservation — ASAAL Convention 2026</title>
+<meta name="description" content="Reserve a discounted room at the Sheraton Atlantic City for the ASAAL National Convention.">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .rate-card { text-align: center; padding: var(--s-6); border-radius: var(--r-3); border: 1px solid var(--line); background: var(--bg-elev); }
+  .rate-card.featured { background: var(--asaal-blue); color: #fff; border-color: var(--asaal-blue); transform: scale(1.04); box-shadow: var(--shadow-3); }
+  .rate-card.featured * { color: #fff; }
+  .rate-card .rate { font-family: var(--font-display); font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+  .rate-card.featured .rate { color: var(--asaal-saffron); }
+  .rate-card .per { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .rate-card.featured .per { color: rgba(255,255,255,.7); }
+  .rate-card h3 { margin-top: var(--s-3); }
+  .rate-card ul { list-style: none; padding: 0; margin: var(--s-4) 0; text-align: left; }
+  .rate-card li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .rate-card.featured li { border-bottom-color: rgba(255,255,255,.15); }
+  .rate-card li::before { content: "✓"; color: var(--asaal-red); font-weight: 700; }
+  .rate-card.featured li::before { color: var(--asaal-saffron); }
+  .map-block { background: var(--bg-muted); border-radius: var(--r-3); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--ink-3); font-family: var(--font-mono); font-size: 13px; position: relative; overflow: hidden; }
+  .map-block::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.4;
+  }
+  .map-pin { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .map-pin .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--asaal-red); border: 4px solid #fff; box-shadow: var(--shadow-2); }
+</style>
+</head>
+<body>
+
+<header id="site-header" data-active="events"></header>
+
+<!-- Header -->
+<section class="section tight" style="border-bottom: 1px solid var(--line);">
+  <div class="container">
+    <span class="eyebrow">§ Convention 2026 · Hotel</span>
+    <div class="grid grid-2" style="gap: var(--s-7); margin-top: var(--s-3); align-items: end;">
+      <h1 style="margin: 0;">Sheraton Atlantic City<br><em style="font-style:normal; color: var(--asaal-red);">discounted block.</em></h1>
+      <p class="lede">ASAAL has reserved a block of rooms at the Sheraton Atlantic City for convention attendees at a discounted rate. Book by <strong>June 1, 2026</strong> to lock in the ASAAL rate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Hotel + visual -->
+<section class="section">
+  <div class="container">
+    <div class="grid" style="grid-template-columns: 1.2fr 1fr; gap: var(--s-7); align-items: start;">
+      <div class="ph" data-ratio="16x9">
+        <div class="ph__label">Sheraton Atlantic City exterior<br>(SheratonAtlanticCityNJ_2025.png)</div>
+      </div>
+      <div>
+        <div class="flex" style="gap: var(--s-2); margin-bottom: var(--s-3);">
+          <span class="tag is-blue">★★★★</span>
+          <span class="tag">Convention venue</span>
+        </div>
+        <h2 style="font-size: var(--fs-h3);">Sheraton Atlantic City Convention Center</h2>
+        <p>The convention's official hotel, with on-site meeting rooms, the awards gala ballroom, and ASAAL hospitality suite all in one building. Walk to the boardwalk and convention center entrance.</p>
+        <dl style="margin-top: var(--s-4); display: grid; gap: var(--s-3);">
+          <div>
+            <dt style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);">Address</dt>
+            <dd style="margin: 4px 0 0; font-size: 16px;">Two Convention Boulevard, Atlantic City, NJ 08401</dd>
+          </div>
+          <div>
+            <dt style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);">Phone</dt>
+            <dd style="margin: 4px 0 0; font-size: 16px;"><a href="tel:+16093442000">+1 (609) 344-2000</a></dd>
+          </div>
+          <div>
+            <dt style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);">ASAAL block code</dt>
+            <dd style="margin: 4px 0 0; font-size: 16px; font-family: var(--font-mono); letter-spacing: 0.08em;">ASAAL2026</dd>
+          </div>
+        </dl>
+        <div class="flex wrap" style="gap: var(--s-3); margin-top: var(--s-5);">
+          <a href="#" class="btn btn--primary btn--lg">Reserve now ↗</a>
+          <a href="tel:+16093442000" class="btn btn--ghost btn--lg">Call hotel directly</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rates -->
+<section class="section muted">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="eyebrow is-blue">Rates</span>
+        <h2>Three options for every traveler.</h2>
+        <p class="lede">Rates include taxes and resort fees. ASAAL convention discount applied automatically with the block code.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="align-items: stretch;">
+      <div class="rate-card">
+        <span class="per">Standard</span>
+        <div class="rate">$149<small style="font-size: 18px; color: var(--ink-3);">/night</small></div>
+        <h3 style="font-size: var(--fs-h5);">Standard King</h3>
+        <ul>
+          <li>One king bed</li>
+          <li>Free Wi-Fi</li>
+          <li>Walk to convention floor</li>
+          <li>Late check-out Sunday</li>
+        </ul>
+        <a href="#" class="btn btn--ghost btn--block">Reserve standard</a>
+      </div>
+      <div class="rate-card featured">
+        <span class="per">Most popular</span>
+        <div class="rate">$179<small style="font-size: 18px;">/night</small></div>
+        <h3 style="font-size: var(--fs-h5);">Double Queen</h3>
+        <ul>
+          <li>Two queen beds · sleeps 4</li>
+          <li>Free Wi-Fi</li>
+          <li>Welcome breakfast included</li>
+          <li>Late check-out Sunday</li>
+          <li>ASAAL hospitality access</li>
+        </ul>
+        <a href="#" class="btn btn--saffron btn--block">Reserve double</a>
+      </div>
+      <div class="rate-card">
+        <span class="per">Premium</span>
+        <div class="rate">$249<small style="font-size: 18px; color: var(--ink-3);">/night</small></div>
+        <h3 style="font-size: var(--fs-h5);">Ocean-view Suite</h3>
+        <ul>
+          <li>Separate living area</li>
+          <li>Ocean / boardwalk view</li>
+          <li>Welcome breakfast included</li>
+          <li>Concierge service</li>
+        </ul>
+        <a href="#" class="btn btn--ghost btn--block">Reserve suite</a>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top: var(--s-5); font-family: var(--font-mono); font-size: 13px; color: var(--ink-3);">Book by <strong>June 1, 2026</strong> · Rates illustrative · Subject to availability</p>
+  </div>
+</section>
+
+<!-- Getting there -->
+<section class="section">
+  <div class="container">
+    <div class="grid grid-2" style="gap: var(--s-7); align-items: center;">
+      <div>
+        <span class="eyebrow is-saffron">Getting there</span>
+        <h2 style="margin-top: var(--s-3);">Travel from anywhere in the country.</h2>
+        <div style="margin-top: var(--s-5); display: grid; gap: var(--s-4);">
+          <div>
+            <h4 style="font-size: var(--fs-h6); margin-bottom: 4px;">By Air</h4>
+            <p style="margin: 0;">Atlantic City Int'l (ACY) — 20 min. Philadelphia Int'l (PHL) — 60 min. Newark Liberty (EWR) — 2 hrs.</p>
+          </div>
+          <div>
+            <h4 style="font-size: var(--fs-h6); margin-bottom: 4px;">By Bus</h4>
+            <p style="margin: 0;">NJ Transit bus from NYC Port Authority — 2.5 hrs direct. Greyhound and Megabus also serve AC.</p>
+          </div>
+          <div>
+            <h4 style="font-size: var(--fs-h6); margin-bottom: 4px;">By Car</h4>
+            <p style="margin: 0;">Atlantic City Expressway exit 1. Self-parking and valet available at the Sheraton.</p>
+          </div>
+          <div>
+            <h4 style="font-size: var(--fs-h6); margin-bottom: 4px;">By Train</h4>
+            <p style="margin: 0;">NJ Transit Atlantic City Line from 30th St Station, Philadelphia — 90 min. AC Rail Terminal is 5 min from the Sheraton.</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-block" aria-label="Map placeholder showing the Sheraton in Atlantic City">
+        <div class="map-pin">
+          <div class="dot"></div>
+          <strong style="font-family: var(--font-display); font-size: 15px; color: var(--ink); background: #fff; padding: 4px 10px; border-radius: var(--r-2); box-shadow: var(--shadow-1);">Sheraton Atlantic City</strong>
+          <small style="color: var(--ink-3); font-family: var(--font-mono); font-size: 11px;">embed Google Map here</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section muted">
+  <div class="container narrow">
+    <span class="eyebrow">Hotel FAQ</span>
+    <h2 style="margin-top: var(--s-3);">Things to know before you book.</h2>
+    <div style="margin-top: var(--s-6); display: grid; gap: var(--s-3);">
+      <details class="card" style="cursor: pointer;">
+        <summary style="font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h6); list-style: none; display: flex; justify-content: space-between;">When is the ASAAL block deadline?<span style="color: var(--asaal-red);">+</span></summary>
+        <p style="margin-top: var(--s-3);">June 1, 2026. After that, rooms revert to public rates and availability isn't guaranteed.</p>
+      </details>
+      <details class="card" style="cursor: pointer;">
+        <summary style="font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h6); list-style: none; display: flex; justify-content: space-between;">Cancellation policy?<span style="color: var(--asaal-red);">+</span></summary>
+        <p style="margin-top: var(--s-3);">Free cancellation up to 72 hours before check-in. After that, one night's rate is charged.</p>
+      </details>
+      <details class="card" style="cursor: pointer;">
+        <summary style="font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h6); list-style: none; display: flex; justify-content: space-between;">Roommate matching?<span style="color: var(--asaal-red);">+</span></summary>
+        <p style="margin-top: var(--s-3);">Yes — ASAAL can match you with another attendee from your chapter to share a double-queen room and split costs. Contact <a href="mailto:convention@asaal.org">convention@asaal.org</a>.</p>
+      </details>
+      <details class="card" style="cursor: pointer;">
+        <summary style="font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h6); list-style: none; display: flex; justify-content: space-between;">Accessibility?<span style="color: var(--asaal-red);">+</span></summary>
+        <p style="margin-top: var(--s-3);">The Sheraton is ADA-compliant. Accessible rooms can be requested at booking. The convention venue and gala ballroom are step-free.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+<div id="tweaks"></div>
+<script src="js/chapters-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

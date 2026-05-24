@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Work — ASAAL</title>
+<meta name="description" content="ASAAL strengthens South Asian American communities through advocacy, civic engagement, leadership development, grassroots organizing, coalition building, and community service across the United States.">
+
+<meta property="og:title" content="Our Work — Alliance of South Asian American Labor (ASAAL)">
+<meta property="og:description" content="Eight pillars of the ASAAL movement: advocacy, civic engagement, political mobilization, leadership, organizing, coalition, community support, and cultural unity.">
+<meta property="og:image" content="../img/asaalLogo.png">
+<meta property="og:url" content="https://asaal.org/ourwork/">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="../img/favicon.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/ourwork.css">
+</head>
+<body>
+
+<header id="site-header" data-active="services"></header>
+
+<!-- ============================ SECTION INTRO ============================ -->
+<section class="work-intro" id="our-work">
+  <div class="container">
+    <div class="work-intro__grid">
+      <div class="reveal">
+        <span class="eyebrow" data-ow-region="intro-eyebrow"></span>
+        <h1 class="work-intro__title" data-ow-region="intro-title"></h1>
+        <p class="work-intro__lede" data-ow-region="intro-lede"></p>
+      </div>
+      <div class="reveal">
+        <div class="work-intro__pills" data-ow-region="intro-pills"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 1. MISSION PILLARS (BENTO) ============================ -->
+<section class="pillars-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="eyebrow">/ 01 — The eight pillars</span>
+        <h2>Eight pillars of the ASAAL movement.</h2>
+        <p class="lede">Not services. Not a checklist. The core commitments that make us a national force for South Asian American workers and families.</p>
+      </div>
+      <div class="section-head__action">
+        <a href="../form.html" class="btn btn--primary">Join the movement →</a>
+      </div>
+    </div>
+
+    <div class="pillars-bento" data-ow-region="pillars"></div>
+  </div>
+</section>
+
+<!-- ============================ 2. IMPACT METRICS ============================ -->
+<section class="impact-section" id="impact">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="eyebrow">/ 02 — Impact by the numbers</span>
+        <h2>Eighteen years of organized power.</h2>
+        <p class="lede">From founding in 2008 to today — a national federation built one chapter, one voter, one election at a time.</p>
+      </div>
+    </div>
+
+    <div class="impact-grid reveal" data-ow-region="metrics"></div>
+  </div>
+</section>
+
+<!-- ============================ 3. SUCCESS STORIES ============================ -->
+<section class="stories-section" id="stories">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__title">
+        <span class="eyebrow">/ 03 — Evidence of impact</span>
+        <h2>Where the work meets the world.</h2>
+        <p class="lede">Four arenas where ASAAL's pillars become results. Each card holds placeholders for photos, testimonials, and case studies — the living record we update as wins land.</p>
+      </div>
+    </div>
+
+    <div class="stories-grid" data-ow-region="stories"></div>
+  </div>
+</section>
+
+<!-- ============================ 4. CALL TO ACTION ============================ -->
+<section class="work-cta" id="join">
+  <div class="container">
+    <div class="work-cta__inner">
+      <span class="eyebrow" data-ow-region="cta-eyebrow"></span>
+      <h2 data-ow-region="cta-title"></h2>
+      <p data-ow-region="cta-body"></p>
+
+      <div class="work-cta__buttons" data-ow-region="cta-buttons"></div>
+
+      <div class="work-cta__sub" data-ow-region="cta-contact"></div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+<div id="tweaks"></div>
+
+<!-- Data + renderer must load AFTER main.js so window.ASAAL_BASE is set,
+     but BEFORE DOMContentLoaded fires so main.js's reveal & counter
+     observers attach to rendered content. -->
+<script src="../js/chapters-data.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/ourwork-data.js"></script>
+<script src="../js/ourwork-render.js"></script>
+<script>ASAAL_OURWORK_RENDER.full();</script>
+</body>
+</html>
