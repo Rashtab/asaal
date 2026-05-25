@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become a Sponsor — ASAAL Sponsor Application</title>
+<meta name="description" content="Apply to sponsor ASAAL. A short three-step application — we respond within 48 hours with a tailored package.">
+<link rel="icon" href="../../img/favicon.png">
+<link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/sponsorship.css">
+</head>
+<body class="sp-page">
+
+<header id="site-header" data-active="sponsorship"></header>
+
+<section class="sphero" style="padding-bottom: clamp(48px, 6vw, 80px);">
+  <div class="sphero__grain"></div>
+  <div class="container sphero__inner">
+    <nav style="margin-bottom: var(--s-5); font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.6);">
+      <a href="../" style="color: rgba(255,255,255,.7);">Sponsorship</a>
+      <span style="opacity:.4">/</span>
+      <span style="color: var(--asaal-saffron);">Apply</span>
+    </nav>
+    <span class="sphero__eyebrow">§ 05 — Sponsor application</span>
+    <h1>Three steps.<br><em>Forty-eight hours.</em></h1>
+    <p class="lede">A short application — organization, level, then logo &amp; artwork. We respond within 48 hours with confirmation and a tailored package outline.</p>
+  </div>
+</section>
+
+<section class="sp-section">
+  <div class="container">
+    <div class="applywrap">
+      <form id="apply-form" novalidate>
+        <!-- Step indicators -->
+        <div class="applysteps" role="tablist" aria-label="Application steps">
+          <button type="button" class="applystep is-active" data-step="1"><span class="applystep__num">1</span> Organization</button>
+          <button type="button" class="applystep"           data-step="2"><span class="applystep__num">2</span> Sponsorship</button>
+          <button type="button" class="applystep"           data-step="3"><span class="applystep__num">3</span> Artwork &amp; submit</button>
+        </div>
+
+        <!-- ============ STEP 1 ============ -->
+        <div class="applypane is-active" data-pane="1">
+          <h3>About your organization</h3>
+          <p class="lede">The basics. Everything is held in confidence and used only to follow up with you.</p>
+
+          <div class="applyrow">
+            <div class="field is-full">
+              <label for="f-org">Organization name</label>
+              <input id="f-org" name="org" type="text" placeholder="e.g. Patel Brothers · NY Life · Singh & Patel Law" required>
+            </div>
+          </div>
+
+          <div class="applyrow">
+            <div class="field">
+              <label for="f-contact">Contact person</label>
+              <input id="f-contact" name="contact" type="text" placeholder="First Last" required>
+            </div>
+            <div class="field">
+              <label for="f-title">Title</label>
+              <input id="f-title" name="title" type="text" placeholder="Director · Owner · Partner …">
+            </div>
+          </div>
+
+          <div class="applyrow">
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" placeholder="you@org.com" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" placeholder="(212) 555-0100">
+            </div>
+          </div>
+
+          <div class="applyrow">
+            <div class="field">
+              <label for="f-website">Website</label>
+              <input id="f-website" name="website" type="url" placeholder="https://">
+            </div>
+            <div class="field">
+              <label for="f-industry">Industry</label>
+              <select id="f-industry" name="industry">
+                <option value="">— Pick one —</option>
+                <option>Healthcare</option>
+                <option>Insurance &amp; financial services</option>
+                <option>Law</option>
+                <option>Real estate</option>
+                <option>Retail · food · hospitality</option>
+                <option>Government · elected official</option>
+                <option>Nonprofit · foundation</option>
+                <option>Labor union</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="applynav">
+            <span></span>
+            <button type="button" class="btn btn--primary btn--lg" data-next="2">Continue → Sponsorship</button>
+          </div>
+        </div>
+
+        <!-- ============ STEP 2 ============ -->
+        <div class="applypane" data-pane="2">
+          <h3>Pick a sponsorship level</h3>
+          <p class="lede">You can change this later — call us if you'd like to discuss a custom package.</p>
+
+          <div class="field is-full" style="margin-bottom: var(--s-5);">
+            <label>Sponsorship level</label>
+            <div class="levelpick" id="levelpick"></div>
+          </div>
+
+          <div class="field is-full" style="margin-bottom: var(--s-5);">
+            <label>Programs of interest <span style="text-transform: none; letter-spacing: 0; color: var(--ink-mute);">— optional, multi-select</span></label>
+            <div class="progpick" id="progpick"></div>
+          </div>
+
+          <div class="field is-full">
+            <label for="f-multi">Multi-year interest?</label>
+            <select id="f-multi" name="multiyear">
+              <option value="single">Single year</option>
+              <option value="2">2-year partnership</option>
+              <option value="3">3-year partnership</option>
+              <option value="open">Open to discussion</option>
+            </select>
+          </div>
+
+          <div class="applynav">
+            <button type="button" class="btn btn--ghost btn--lg" data-prev="1">← Back</button>
+            <button type="button" class="btn btn--primary btn--lg" data-next="3">Continue → Artwork</button>
+          </div>
+        </div>
+
+        <!-- ============ STEP 3 ============ -->
+        <div class="applypane" data-pane="3">
+          <h3>Logo, journal artwork, and submit</h3>
+          <p class="lede">Final step. Upload what you have — you can always send updates to journal@asaal.org later.</p>
+
+          <div class="applyrow">
+            <label class="fileslot" for="f-logo">
+              <div class="fileslot__lbl">↑ Upload company logo</div>
+              <div class="fileslot__hint">SVG · PNG · or PDF · transparent background preferred</div>
+              <input id="f-logo" type="file" accept=".svg,.png,.jpg,.jpeg,.pdf,image/*">
+              <div id="f-logo-name" style="font-family: var(--font-mono); font-size: 11px; color: var(--asaal-red); margin-top: 8px; display: none;"></div>
+            </label>
+            <label class="fileslot" for="f-ad">
+              <div class="fileslot__lbl">↑ Upload journal ad artwork</div>
+              <div class="fileslot__hint">Print-ready PDF · CMYK · 300dpi · with bleed</div>
+              <input id="f-ad" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/*">
+              <div id="f-ad-name" style="font-family: var(--font-mono); font-size: 11px; color: var(--asaal-red); margin-top: 8px; display: none;"></div>
+            </label>
+          </div>
+
+          <div class="field is-full" style="margin-bottom: var(--s-5);">
+            <label for="f-comments">Comments &amp; goals</label>
+            <textarea id="f-comments" name="comments" placeholder="Tell us what you'd like to accomplish with this sponsorship. Anything we should know?"></textarea>
+          </div>
+
+          <div class="field is-full">
+            <label style="display: flex; gap: 10px; align-items: flex-start; cursor: pointer; text-transform: none; letter-spacing: 0; font-family: var(--font-display); font-size: 14px; color: var(--ink);">
+              <input type="checkbox" id="f-consent" required style="margin-top: 3px; accent-color: var(--asaal-red);">
+              <span>I confirm I'm authorized to submit this application on behalf of my organization, and I agree to be contacted by ASAAL.</span>
+            </label>
+          </div>
+
+          <div class="applynav">
+            <button type="button" class="btn btn--ghost btn--lg" data-prev="2">← Back</button>
+            <button type="submit" class="btn btn--primary btn--lg" id="apply-submit">Submit application →</button>
+          </div>
+        </div>
+
+        <!-- ============ DONE ============ -->
+        <div class="applypane" data-pane="done">
+          <div class="applysubmitted">
+            <div class="check">✓</div>
+            <h3>Application received.</h3>
+            <p style="max-width: 50ch; margin: 0 auto var(--s-5); color: var(--ink-2);">A confirmation email is on its way. Someone from the ASAAL sponsorship team will be in touch within 48 hours.</p>
+            <div style="display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
+              <a class="btn btn--ghost btn--lg" href="../levels/index.html">View levels again</a>
+              <a class="btn btn--ghost btn--lg" href="../../events/index.html">Browse events</a>
+              <a class="btn btn--primary btn--lg" href="../../index.html">Back to ASAAL</a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Summary aside -->
+      <aside class="applyaside" id="apply-aside">
+        <h4>What you're applying for</h4>
+        <p>The application is held in confidence and reviewed by the National Executive Council's sponsorship committee.</p>
+        <dl>
+          <div><dt>Selected level</dt><dd id="sum-level">— Pick a tier in step 2 —</dd></div>
+          <div><dt>Programs of interest</dt><dd id="sum-progs">— None selected —</dd></div>
+          <div><dt>Multi-year</dt><dd id="sum-multi">Single year</dd></div>
+          <div><dt>Logo uploaded</dt><dd id="sum-logo">—</dd></div>
+          <div><dt>Journal ad uploaded</dt><dd id="sum-ad">—</dd></div>
+        </dl>
+        <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--ink-3); margin-top: var(--s-4);">Questions? <a href="../../index.html#contact" style="color: var(--asaal-red); font-family: var(--font-display);">Contact ASAAL →</a></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/chapters-data.js"></script>
+<script src="../../js/sponsorship-data.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../sponsorship-shared.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const D = window.ASAAL_SPONSORSHIP; if (!D) return;
+
+  // ----- URL preselects ---------------------------
+  const params = new URLSearchParams(location.search);
+  const preLevel = params.get('level');
+  const preIntent = params.get('intent'); // 'journal' opens to step 3 default
+
+  // ----- Levels (radio cards) ---------------------
+  const lp = document.getElementById('levelpick');
+  D.LEVELS.forEach(l => {
+    const lbl = document.createElement('label');
+    lbl.className = 'lvlradio';
+    lbl.dataset.lvl = l.key;
+    lbl.innerHTML = `
+      <input type="radio" name="level" value="${l.key}" ${preLevel === l.key ? 'checked' : ''}>
+      <div class="lvlradio__name">${l.name}</div>
+      <div class="lvlradio__amount">${l.amountLabel}</div>
+    `;
+    lp.appendChild(lbl);
+  });
+  lp.addEventListener('change', () => {
+    document.querySelectorAll('.lvlradio').forEach(r => {
+      const input = r.querySelector('input');
+      r.classList.toggle('is-checked', input.checked);
+      r.style.setProperty('--lvl-color', (D.LEVELS.find(l => l.key === input.value) || {}).color);
+    });
+    updateSummary();
+  });
+  // initial state
+  lp.querySelectorAll('input:checked').forEach(i => i.closest('.lvlradio').classList.add('is-checked'));
+
+  // ----- Programs (checkbox chips) ----------------
+  const pp = document.getElementById('progpick');
+  D.PROGRAMS.forEach(p => {
+    const lbl = document.createElement('label');
+    lbl.className = 'progcheck';
+    lbl.innerHTML = `<input type="checkbox" value="${p.key}"><span>${p.name}</span>`;
+    pp.appendChild(lbl);
+  });
+  pp.addEventListener('change', () => {
+    pp.querySelectorAll('.progcheck').forEach(r => {
+      r.classList.toggle('is-checked', r.querySelector('input').checked);
+    });
+    updateSummary();
+  });
+
+  // ----- Step navigation --------------------------
+  function showStep(n) {
+    document.querySelectorAll('.applypane').forEach(p => p.classList.toggle('is-active', p.dataset.pane === String(n)));
+    document.querySelectorAll('.applystep').forEach(s => {
+      const stepN = parseInt(s.dataset.step, 10);
+      s.classList.toggle('is-active', stepN === parseInt(n, 10));
+      s.classList.toggle('is-done', stepN < parseInt(n, 10));
+    });
+    window.scrollTo({ top: document.querySelector('.applywrap').offsetTop - 120, behavior: 'smooth' });
+  }
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => {
+    const next = b.getAttribute('data-next');
+    // light validation on step 1
+    if (next === '2') {
+      const orgVal = document.getElementById('f-org').value.trim();
+      const emailVal = document.getElementById('f-email').value.trim();
+      const contactVal = document.getElementById('f-contact').value.trim();
+      if (!orgVal || !emailVal || !contactVal) {
+        alert('Please fill in organization name, contact person, and email before continuing.');
+        return;
+      }
+    }
+    showStep(next);
+  }));
+  document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => showStep(b.getAttribute('data-prev'))));
+  document.querySelectorAll('.applystep').forEach(s => s.addEventListener('click', () => {
+    // Allow clicking step indicators only to go back
+    const n = parseInt(s.dataset.step, 10);
+    const currentActive = document.querySelector('.applypane.is-active').dataset.pane;
+    if (currentActive !== 'done' && n <= parseInt(currentActive, 10)) showStep(n);
+  }));
+
+  // If user landed with intent=journal, default-select Public sponsor for context
+  if (preIntent === 'journal') {
+    const publicRadio = lp.querySelector('input[value="public"]');
+    if (publicRadio && !preLevel) {
+      publicRadio.checked = true;
+      lp.querySelectorAll('.lvlradio').forEach(r => r.classList.toggle('is-checked', r.querySelector('input').checked));
+    }
+  }
+
+  // ----- File pickers -----------------------------
+  function bindFile(inputId, nameId, sumId) {
+    const input = document.getElementById(inputId);
+    const name = document.getElementById(nameId);
+    input.addEventListener('change', () => {
+      const f = input.files[0];
+      if (f) {
+        name.textContent = '✓ ' + f.name;
+        name.style.display = 'block';
+        document.getElementById(sumId).textContent = f.name;
+      } else {
+        name.style.display = 'none';
+        document.getElementById(sumId).textContent = '—';
+      }
+    });
+  }
+  bindFile('f-logo', 'f-logo-name', 'sum-logo');
+  bindFile('f-ad',   'f-ad-name',   'sum-ad');
+
+  // ----- Summary aside ----------------------------
+  function updateSummary() {
+    const checked = lp.querySelector('input:checked');
+    const lvl = checked ? D.LEVELS.find(l => l.key === checked.value) : null;
+    document.getElementById('sum-level').textContent = lvl ? `${lvl.name} · ${lvl.amountLabel}` : '— Pick a tier in step 2 —';
+
+    const progs = Array.from(pp.querySelectorAll('input:checked')).map(i => {
+      const p = D.PROGRAMS.find(x => x.key === i.value);
+      return p ? p.name : i.value;
+    });
+    document.getElementById('sum-progs').textContent = progs.length ? progs.join(' · ') : '— None selected —';
+
+    document.getElementById('sum-multi').textContent = document.getElementById('f-multi').value.replace('open','Open to discussion').replace('single','Single year').replace(/^(\d)$/, '$1-year partnership');
+  }
+  document.getElementById('f-multi').addEventListener('change', updateSummary);
+  updateSummary();
+
+  // ----- Submit -----------------------------------
+  document.getElementById('apply-form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!document.getElementById('f-consent').checked) {
+      alert('Please confirm the consent checkbox before submitting.');
+      return;
+    }
+    showStep('done');
+  });
+});
+</script>
+</body>
+</html>

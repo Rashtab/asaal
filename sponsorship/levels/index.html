@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sponsorship Levels — Partner with ASAAL</title>
+<meta name="description" content="ASAAL sponsorship tiers — Grand, Platinum, Gold, Silver, General, and Public Sponsor. Full benefits, side-by-side comparison.">
+
+<link rel="icon" href="../../img/favicon.png">
+<link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/sponsorship.css">
+</head>
+<body class="sp-page">
+
+<header id="site-header" data-active="sponsorship"></header>
+
+<!-- ============================ HERO (compact) ============================ -->
+<section class="sphero" style="padding-bottom: clamp(48px, 6vw, 80px);">
+  <div class="sphero__grain"></div>
+  <div class="container sphero__inner">
+    <nav style="margin-bottom: var(--s-5); font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.6);">
+      <a href="../" style="color: rgba(255,255,255,.7);">Sponsorship</a>
+      <span style="opacity:.4">/</span>
+      <span style="color: var(--asaal-saffron);">Levels</span>
+    </nav>
+    <span class="sphero__eyebrow">§ 02 — Sponsorship levels</span>
+    <h1>Six tiers.<br><em>One movement.</em></h1>
+    <p class="lede">From the $2,000 Public Sponsor through the $25,000 Grand Sponsor — every tier earns real recognition, real access, and a year of impact reports. Pick the level that fits your priorities; the team will tailor the rest.</p>
+    <div class="sphero__cta">
+      <a href="#tiers" class="btn btn--saffron btn--lg">See all six tiers ↓</a>
+      <a href="#compare" class="btn btn--ghost-light btn--lg">Compare levels</a>
+      <a href="../apply/index.html" class="btn btn--primary btn--lg">Apply now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ LEVELS GRID ============================ -->
+<section class="sp-section" id="tiers">
+  <div class="container">
+    <div class="sp-head">
+      <div>
+        <span class="sp-eyebrow">§ 01 — All six tiers</span>
+        <h2>The full sponsorship menu.</h2>
+      </div>
+      <p class="lede">Multi-year partnerships available at every level — multi-year sponsors receive guaranteed positioning year over year.</p>
+    </div>
+
+    <div class="levels" id="levels-grid"></div>
+
+    <p style="margin-top: var(--s-6); text-align: center; color: var(--ink-3); font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;">
+      Custom packages available · Multi-year agreements receive preferential pricing · All figures USD
+    </p>
+  </div>
+</section>
+
+<!-- ============================ COMPARE ============================ -->
+<section class="sp-section muted" id="compare">
+  <div class="container">
+    <div class="sp-head">
+      <div>
+        <span class="sp-eyebrow is-blue">§ 02 — Compare</span>
+        <h2>Side-by-side, line by line.</h2>
+      </div>
+      <p class="lede">The full benefits matrix. Scroll horizontally if needed.</p>
+    </div>
+
+    <div class="lvltable">
+      <table id="cmp-table">
+        <thead><tr id="cmp-head"></tr></thead>
+        <tbody id="cmp-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NEXT STEPS ============================ -->
+<section class="sp-section">
+  <div class="container">
+    <div class="spcta">
+      <span class="sp-eyebrow">§ 03 — Next step</span>
+      <h2>Ready to pick a level?</h2>
+      <p>The sponsor application takes 3 minutes. We respond within 48 hours with a confirmation and a tailored package outline.</p>
+      <div class="spcta__btns">
+        <a href="../apply/index.html" class="btn btn--primary btn--lg">Become a sponsor</a>
+        <a href="../../index.html#contact" class="btn btn--ghost btn--lg">Talk to ASAAL first</a>
+        <a href="../journal-advertising/index.html" class="btn btn--ghost btn--lg">Journal advertising →</a>
+        <a id="dl" href="#" class="btn btn--ghost btn--lg">⤴ Open interactive package</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/chapters-data.js"></script>
+<script src="../../js/sponsorship-data.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../sponsorship-shared.js"></script>
+<script>
+(function () {
+  document.addEventListener('DOMContentLoaded', () => {
+    const D = window.ASAAL_SPONSORSHIP; if (!D) return;
+    document.getElementById('dl').href = '../flipbook/index.html';
+
+    // ---- Levels grid ----
+    const grid = document.getElementById('levels-grid');
+    D.LEVELS.forEach(l => {
+      const el = document.createElement('article');
+      el.className = 'level' + (l.featured ? ' is-featured' : '');
+      el.style.setProperty('--lvl-color', l.color);
+      el.innerHTML = `
+        ${l.featured ? '<div class="level__ribbon">Most popular</div>' : ''}
+        <div class="level__eyebrow">${l.eyebrow}</div>
+        <h3 class="level__name">${l.name}</h3>
+        <div class="level__amount">${l.amountLabel}</div>
+        <p class="level__tagline">${l.tagline}</p>
+        <p class="level__recognition">${l.recognition}</p>
+
+        <div class="level__group">
+          <div class="level__group-lbl">Marketing & visibility</div>
+          <ul>${l.visibility.map(v => `<li>${v}</li>`).join('')}</ul>
+        </div>
+
+        <div class="level__group">
+          <div class="level__group-lbl">Sponsor benefits</div>
+          <ul>${l.benefits.map(b => `<li>${b}</li>`).join('')}</ul>
+        </div>
+
+        <div class="level__group">
+          <div class="level__group-lbl">Convention access</div>
+          <div class="level__seats">
+            <div class="level__seat"><dt>Convention attendees</dt><dd>${l.seats.convention}</dd></div>
+            <div class="level__seat"><dt>Awards gala seats</dt><dd>${l.seats.gala}</dd></div>
+            <div class="level__seat" style="grid-column: 1 / -1;">
+              <dt>Registration</dt><dd style="font-size: 14px;">${l.registration}</dd>
+            </div>
+            <div class="level__seat" style="grid-column: 1 / -1;">
+              <dt>VIP reception</dt><dd style="font-size: 14px;">${l.seats.vipReception}</dd>
+            </div>
+            ${l.speaking && l.speaking !== '—' ? `<div class="level__seat" style="grid-column: 1 / -1;"><dt>Speaking</dt><dd style="font-size: 14px;">${l.speaking}</dd></div>` : ''}
+          </div>
+        </div>
+
+        <div class="level__cta">
+          <a class="btn btn--primary btn--sm" href="../apply/index.html?level=${l.key}">Become ${l.name.split(' ')[0]}</a>
+          <a class="btn btn--ghost btn--sm" href="../../index.html#contact">Contact ASAAL</a>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+
+    // ---- Compare table ----
+    const head = document.getElementById('cmp-head');
+    const body = document.getElementById('cmp-body');
+    head.innerHTML = `<th>Benefit</th>` + D.LEVELS.map(l => `
+      <th class="ltcol" style="color:${l.color};">${l.name}<small>${l.amountLabel}</small></th>
+    `).join('');
+
+    function row(label, valueFn) {
+      return `<tr>
+        <th scope="row">${label}</th>
+        ${D.LEVELS.map(l => `<td>${valueFn(l)}</td>`).join('')}
+      </tr>`;
+    }
+    function rowNum(label, fn) {
+      return `<tr>
+        <th scope="row">${label}</th>
+        ${D.LEVELS.map(l => {
+          const v = fn(l);
+          return `<td class="is-num">${v}</td>`;
+        }).join('')}
+      </tr>`;
+    }
+    function rowCheck(label, fn) {
+      return `<tr>
+        <th scope="row">${label}</th>
+        ${D.LEVELS.map(l => {
+          const has = fn(l);
+          return `<td class="${has ? 'is-check' : 'is-x'}" style="${has ? `color:${l.color};` : ''}">${has ? '✓' : '—'}</td>`;
+        }).join('')}
+      </tr>`;
+    }
+
+    body.innerHTML = `
+      ${rowNum('Convention attendees', l => l.seats.convention)}
+      ${rowNum('Awards gala seats',    l => l.seats.gala)}
+      ${rowCheck('Premier stage logo placement',  l => ['grand','platinum'].includes(l.key))}
+      ${rowCheck('Logo on stage backdrop',        l => ['grand','platinum','gold'].includes(l.key))}
+      ${rowCheck('Logo in convention journal',    l => ['grand','platinum','gold','silver','general'].includes(l.key))}
+      ${rowCheck('Listed name in journal',        l => true)}
+      ${row('Journal ad position',                l => {
+        return ({
+          grand:    'Back cover',
+          platinum: 'Inside cover',
+          gold:     'Full page',
+          silver:   'Half page',
+          general:  'Quarter page',
+          public:   'Business card'
+        })[l.key] || '—';
+      })}
+      ${rowCheck('Year-round logo on /sponsors',  l => ['grand','platinum','gold','silver'].includes(l.key))}
+      ${rowCheck('Year-round logo on homepage',   l => l.key === 'grand')}
+      ${rowCheck('Dedicated email blast',         l => l.key === 'grand')}
+      ${rowCheck('Featured sponsor story',        l => ['grand','platinum'].includes(l.key))}
+      ${rowCheck('Social media recognition',      l => ['grand','platinum','gold'].includes(l.key))}
+      ${rowCheck('VIP / leadership reception',    l => ['grand','platinum','gold'].includes(l.key))}
+      ${rowCheck('Speaking / panel slot',         l => ['grand','platinum'].includes(l.key))}
+      ${rowCheck('Exhibit space at convention',   l => ['grand','platinum','gold','silver'].includes(l.key))}
+      ${row('Exhibit size',                       l => ({
+        grand: '20 × 20', platinum: '10 × 20', gold: '10 × 10', silver: '8 × 8', general: '—', public: '—'
+      })[l.key])}
+      ${rowCheck('Custom program underwriting',   l => l.key === 'grand')}
+      ${rowCheck('Quarterly impact report',       l => ['grand','platinum','gold'].includes(l.key))}
+      ${rowCheck('Multi-year discount available', l => true)}
+    `;
+
+    // Highlight the featured tier column row-by-row
+    const featuredIdx = D.LEVELS.findIndex(l => l.featured);
+    if (featuredIdx >= 0) {
+      document.querySelectorAll('#cmp-table tbody tr').forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        if (cells[featuredIdx]) cells[featuredIdx].style.background = 'rgba(229,155,34,.06)';
+      });
+    }
+
+    window.SP_animateCounters && window.SP_animateCounters();
+  });
+})();
+</script>
+</body>
+</html>

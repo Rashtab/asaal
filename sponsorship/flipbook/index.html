@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sponsorship Package — Interactive Edition · ASAAL</title>
+<meta name="description" content="Flip through the ASAAL Convention Sponsorship Package like a real magazine — turn pages, zoom, and download a copy.">
+<link rel="icon" href="../../img/favicon.png">
+<link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/sponsorship.css">
+<style>
+  /* ---------- Flipbook page chrome ------------------------- */
+  .fb-page {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(229,155,34,.10), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(14,47,92,.20), transparent 60%),
+      linear-gradient(180deg, #05080F 0%, #0B1424 60%, #050A13 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding-bottom: var(--s-9);
+  }
+  .fb-page .container { max-width: 1320px; }
+
+  .fb-head {
+    padding: clamp(28px, 5vw, 56px) 0 var(--s-5);
+  }
+  .fb-crumb {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;
+    color: rgba(255,255,255,.55);
+    margin-bottom: var(--s-4);
+  }
+  .fb-crumb a { color: rgba(255,255,255,.75); }
+  .fb-crumb a:hover { color: var(--asaal-saffron); }
+
+  .fb-title-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: var(--s-5); flex-wrap: wrap;
+  }
+  .fb-title-row .left { flex: 1; min-width: 280px; }
+  .fb-title-row h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 60px);
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+    margin: var(--s-3) 0 var(--s-3);
+    color: #fff;
+  }
+  .fb-title-row h1 em { font-style: normal; color: var(--asaal-saffron); }
+  .fb-title-row p {
+    color: rgba(255,255,255,.75);
+    max-width: 62ch;
+    margin: 0;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  .fb-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--asaal-saffron);
+    padding: 4px 12px;
+    background: rgba(229,155,34,.08);
+    border: 1px solid rgba(229,155,34,.35);
+    border-radius: var(--r-pill);
+  }
+  .fb-eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--asaal-saffron); box-shadow: 0 0 10px rgba(229,155,34,.7);
+  }
+
+  /* ---------- Stage ---------------------------------------- */
+  .fb-stage-wrap {
+    margin-top: var(--s-7);
+    background:
+      radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,.04), transparent 70%);
+    border-radius: var(--r-4);
+    padding: var(--s-6) var(--s-3);
+    position: relative;
+  }
+  .fb-stage {
+    margin: 0 auto;
+    position: relative;
+    perspective: 2400px;
+  }
+  .fb-stage::before {
+    /* table shadow */
+    content: "";
+    position: absolute; left: 50%; bottom: -20px;
+    width: 75%; height: 40px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(0,0,0,.5), transparent 70%);
+    filter: blur(14px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .fb-book {
+    /* StPageFlip injects its own root here */
+    position: relative;
+    z-index: 1;
+    border-radius: 6px;
+    box-shadow:
+      0 22px 50px rgba(0,0,0,.55),
+      0 6px 18px rgba(0,0,0,.35),
+      inset 0 0 0 1px rgba(255,255,255,.06);
+    background: #111;
+  }
+  .fb-book .stf__parent { background: transparent; }
+  .fb-book .stf__block { background: #fff; }
+  .fb-book .stf__item {
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+  }
+  /* Gradient on the spine side of each page */
+  .fb-book .stf__item.--left::after,
+  .fb-book .stf__item.--right::after {
+    content: ""; position: absolute; top: 0; bottom: 0;
+    width: 28px;
+    pointer-events: none;
+  }
+  .fb-book .stf__item.--left::after {
+    right: 0;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.18));
+  }
+  .fb-book .stf__item.--right::after {
+    left: 0;
+    background: linear-gradient(270deg, transparent, rgba(0,0,0,.18));
+  }
+
+  .fb-leaf {
+    width: 100%; height: 100%;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+  }
+  .fb-leaf canvas { display: block; width: 100%; height: 100%; }
+  .fb-leaf__num {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(15,16,20,.45);
+  }
+  .fb-leaf__loading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    color: var(--ink-3); text-transform: uppercase;
+    background: repeating-linear-gradient(135deg, rgba(15,16,20,.02) 0 4px, transparent 4px 12px);
+  }
+  .fb-leaf--cover {
+    background:
+      radial-gradient(ellipse 60% 60% at 30% 30%, rgba(229,155,34,.25), transparent 60%),
+      linear-gradient(135deg, #0E2F5C 0%, #061B3A 60%, #0F1014 100%);
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 10%;
+  }
+  .fb-leaf--cover .cv-eyebrow {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--asaal-saffron);
+  }
+  .fb-leaf--cover h2 {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(30px, 4vw, 56px);
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+    margin: var(--s-3) 0 var(--s-3);
+    color: #fff;
+  }
+  .fb-leaf--cover .cv-sub {
+    font-family: var(--font-display); font-weight: 500;
+    color: rgba(255,255,255,.75);
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .fb-leaf--cover .cv-emblem {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
+    color: rgba(255,255,255,.6);
+  }
+  .fb-leaf--cover .cv-emblem strong {
+    font-family: var(--font-display); font-weight: 800; font-size: 28px;
+    color: var(--asaal-saffron); letter-spacing: -0.02em; line-height: 1;
+  }
+  .fb-leaf--back {
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 70%, rgba(185,28,38,.2), transparent 60%),
+      linear-gradient(135deg, #0F1014 0%, #1A1F2C 100%);
+    color: #fff;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 12%;
+    text-align: center;
+  }
+  .fb-leaf--back h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(22px, 3vw, 36px);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--s-4);
+  }
+  .fb-leaf--back p { color: rgba(255,255,255,.75); font-size: 14px; line-height: 1.6; }
+
+  /* ---------- Toolbar -------------------------------------- */
+  .fb-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-4); flex-wrap: wrap;
+    margin: var(--s-6) auto 0;
+    max-width: 760px;
+    padding: var(--s-3) var(--s-4);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+  .fb-tools-left, .fb-tools-right { display: flex; gap: 8px; align-items: center; }
+  .fb-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--t-fast), border-color var(--t-fast);
+  }
+  .fb-btn:hover, .fb-btn:focus { background: rgba(229,155,34,.15); border-color: var(--asaal-saffron); outline: none; }
+  .fb-btn[disabled] { opacity: .4; cursor: not-allowed; }
+  .fb-counter {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: .08em;
+    color: rgba(255,255,255,.85);
+    padding: 0 var(--s-3);
+    min-width: 90px; text-align: center;
+  }
+  .fb-counter strong { color: var(--asaal-saffron); font-weight: 600; }
+  .fb-slider {
+    -webkit-appearance: none; appearance: none;
+    width: 200px; height: 4px;
+    background: rgba(255,255,255,.15);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  .fb-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    background: var(--asaal-saffron);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .fb-slider::-moz-range-thumb {
+    width: 14px; height: 14px;
+    background: var(--asaal-saffron);
+    border: 0; border-radius: 50%;
+    cursor: pointer;
+  }
+  .fb-cta-row {
+    display: flex; gap: var(--s-3); justify-content: center;
+    margin: var(--s-5) auto 0;
+    flex-wrap: wrap;
+  }
+  .fb-hint {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    text-align: center;
+    margin-top: var(--s-5);
+  }
+  .fb-hint kbd {
+    font-family: var(--font-mono);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    border-bottom-width: 2px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 10px;
+    margin: 0 2px;
+  }
+
+  /* ---------- Fullscreen overlay --------------------------- */
+  .fb-fullscreen {
+    position: fixed; inset: 0;
+    z-index: 1000;
+    background: rgba(5,8,15,.96);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: var(--s-4);
+  }
+  .fb-fullscreen.is-open { display: flex; }
+  .fb-fullscreen .fb-stage { width: min(96vw, calc(96vh * 1.4)); }
+  .fb-fullscreen .fb-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.10);
+    color: #fff; font-size: 20px;
+    border: 1px solid rgba(255,255,255,.18);
+    cursor: pointer;
+  }
+
+  /* ---------- Below-the-fold ------------------------------- */
+  .fb-cta {
+    margin-top: var(--s-8);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+    border-left: 4px solid var(--asaal-red);
+    border-radius: var(--r-4);
+    padding: clamp(36px, 5vw, 64px);
+    text-align: center;
+  }
+  .fb-cta h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: var(--s-3) 0;
+  }
+  .fb-cta p { color: rgba(255,255,255,.75); max-width: 60ch; margin: 0 auto var(--s-5); }
+  .fb-cta__btns { display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- Mobile --------------------------------------- */
+  @media (max-width: 720px) {
+    .fb-slider { width: 120px; }
+    .fb-counter { min-width: 70px; font-size: 12px; }
+  }
+</style>
+</head>
+<body class="fb-page">
+
+<header id="site-header" data-active="sponsorship"></header>
+
+<div class="container fb-head">
+  <div class="fb-crumb">
+    <a href="../">Sponsorship</a> <span style="opacity:.4">/</span> Interactive package
+  </div>
+  <div class="fb-title-row">
+    <div class="left">
+      <span class="fb-eyebrow">Live · 4 pages · turn the corner to flip</span>
+      <h1>Sponsorship Package, <em>interactively.</em></h1>
+      <p>The full 2025 Convention Sponsorship Package — rendered live in your browser, page by page, the way you'd flip through it in print. Drag a corner, click a side, or use ← → on the keyboard.</p>
+    </div>
+    <div>
+      <a id="dl-pdf" href="../files/ASAAL-Convention-2025-Sponsorship-Package.pdf" download class="btn btn--ghost-light btn--lg">↓ Download PDF</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="fb-stage-wrap">
+    <div class="fb-stage" id="fb-stage" aria-label="Sponsorship package flipbook">
+      <div id="fb-book" class="fb-book"></div>
+    </div>
+
+    <div class="fb-toolbar" role="toolbar" aria-label="Flipbook controls">
+      <div class="fb-tools-left">
+        <button class="fb-btn" id="fb-first" title="First page" aria-label="First page">«</button>
+        <button class="fb-btn" id="fb-prev"  title="Previous page" aria-label="Previous page">‹</button>
+        <div class="fb-counter">Page <strong id="fb-current">1</strong> / <span id="fb-total">—</span></div>
+        <button class="fb-btn" id="fb-next"  title="Next page" aria-label="Next page">›</button>
+        <button class="fb-btn" id="fb-last"  title="Last page" aria-label="Last page">»</button>
+      </div>
+      <div class="fb-tools-right">
+        <input id="fb-slider" class="fb-slider" type="range" min="1" max="1" value="1" aria-label="Jump to page">
+        <button class="fb-btn" id="fb-zoom"   title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+      </div>
+    </div>
+
+    <div class="fb-hint" aria-hidden="true">
+      Use <kbd>←</kbd> <kbd>→</kbd> · click a side · drag a corner · or <kbd>F</kbd> for fullscreen
+    </div>
+  </div>
+
+  <div class="fb-cta">
+    <span class="fb-eyebrow">§ — Ready to partner</span>
+    <h2>Pick a level and apply — we'll do the rest.</h2>
+    <p>The application takes three minutes. The team responds within 48 hours with a tailored package outline.</p>
+    <div class="fb-cta__btns">
+      <a href="../apply/index.html" class="btn btn--primary btn--lg">Apply now</a>
+      <a href="../levels/index.html" class="btn btn--ghost-light btn--lg">Compare sponsorship levels</a>
+      <a href="../../index.html#contact" class="btn btn--ghost-light btn--lg">Talk to ASAAL</a>
+    </div>
+  </div>
+</div>
+
+<!-- Fullscreen overlay -->
+<div class="fb-fullscreen" id="fb-fullscreen">
+  <button class="fb-close" id="fb-fs-close" aria-label="Exit fullscreen">✕</button>
+  <div class="fb-stage" id="fb-stage-fs">
+    <div id="fb-book-fs" class="fb-book"></div>
+  </div>
+</div>
+
+<footer id="site-footer"></footer>
+
+<script src="../../js/chapters-data.js"></script>
+<script src="../../js/sponsorship-data.js"></script>
+<script src="../../js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const PDF_URL = '../files/ASAAL-Convention-2025-Sponsorship-Package.pdf';
+
+  // pdf.js worker
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  }
+
+  let pdfDoc = null;
+  let pageCanvases = []; // cache rendered canvases per PDF page (1-indexed)
+  let renderingPromises = {};
+  let flip = null;
+  let flipFs = null;
+
+  // ---------- Helpers ---------------------------------------
+  function sizeBook() {
+    const stage = document.getElementById('fb-stage');
+    const w = stage.parentElement.clientWidth - 16;
+    // Two-page spread on wider viewports, single page on mobile
+    const isMobile = window.innerWidth < 760;
+    const pageW = isMobile ? Math.min(w, 460) : Math.min(w / 2, 520);
+    const pageH = Math.round(pageW * (11 / 8.5));
+    stage.style.width = (isMobile ? pageW : pageW * 2) + 'px';
+    stage.style.height = pageH + 'px';
+    return { pageW, pageH, isMobile };
+  }
+
+  function makeLeaf(html, attrs) {
+    const div = document.createElement('div');
+    if (attrs && attrs.className) div.className = attrs.className;
+    div.innerHTML = html;
+    return div;
+  }
+
+  function pdfLeafHTML(pageNum) {
+    return `
+      <div class="fb-leaf" data-pdf-page="${pageNum}">
+        <div class="fb-leaf__loading">Loading page ${pageNum} …</div>
+        <div class="fb-leaf__num">— ${pageNum} —</div>
+      </div>
+    `;
+  }
+
+  function coverLeafHTML() {
+    return `
+      <div class="fb-leaf fb-leaf--cover">
+        <div class="cv-eyebrow">A·S·A·A·L · 2025 Convention</div>
+        <h2>Sponsorship<br>Package.</h2>
+        <p class="cv-sub">An invitation to partner with the largest South Asian American labor federation in the United States — across a year of national programming.</p>
+        <div class="cv-emblem">
+          <div>
+            <div>EDITION</div>
+            <strong>№ XVIII</strong>
+          </div>
+          <div style="text-align: right;">
+            <div>JUL · 18 – 20</div>
+            <strong style="font-size: 16px; color: #fff;">Atlantic City · NJ</strong>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  function backLeafHTML() {
+    return `
+      <div class="fb-leaf fb-leaf--back">
+        <h2>Thanks for reading.</h2>
+        <p>Send questions to <span style="color: var(--asaal-saffron); font-family: var(--font-display);">sponsorship@asaal.org</span> or apply directly from the next button on this page.</p>
+        <p style="margin-top: var(--s-5); font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.5);">ASAAL · Est. 2008 · 20 chapters · 11 states · 10,000+ members</p>
+      </div>
+    `;
+  }
+
+  // Render a PDF page into the canvas of a given leaf element
+  async function renderInto(leafEl, pageNum, dpr) {
+    if (!pdfDoc) return;
+    if (leafEl.dataset.rendered === '1') return;
+
+    const page = await pdfDoc.getPage(pageNum);
+    const targetW = leafEl.clientWidth || 400;
+    const targetH = leafEl.clientHeight || 520;
+    const baseVp = page.getViewport({ scale: 1 });
+    const scale = Math.min(targetW / baseVp.width, targetH / baseVp.height) * (dpr || 1.5);
+    const viewport = page.getViewport({ scale });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(viewport.width);
+    canvas.height = Math.ceil(viewport.height);
+    const ctx = canvas.getContext('2d');
+    await page.render({ canvasContext: ctx, viewport }).promise;
+
+    // Clear loading state
+    const old = leafEl.querySelector('.fb-leaf__loading');
+    if (old) old.remove();
+    leafEl.insertBefore(canvas, leafEl.firstChild);
+    leafEl.dataset.rendered = '1';
+  }
+
+  async function renderVisible() {
+    if (!flip || !pdfDoc) return;
+    const currentIdx = flip.getCurrentPageIndex();
+    const leaves = document.querySelectorAll('#fb-book .fb-leaf[data-pdf-page]');
+    // Render current + adjacent leaves
+    leaves.forEach(leaf => {
+      const num = parseInt(leaf.getAttribute('data-pdf-page'), 10);
+      // Find which book index this leaf is at by querying parents
+      const bookItem = leaf.closest('.stf__item, .stf__block');
+      // Simpler: just render anything currently in the visible window via observer
+    });
+    // Use an IntersectionObserver to render-as-needed
+    if (!window.__fb_io) {
+      window.__fb_io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const pageNum = parseInt(e.target.getAttribute('data-pdf-page'), 10);
+            if (pageNum) renderInto(e.target, pageNum, window.devicePixelRatio > 1.5 ? 2 : 1.5);
+          }
+        });
+      }, { threshold: 0.01 });
+    }
+    leaves.forEach(l => window.__fb_io.observe(l));
+  }
+
+  // ---------- Bootstrap -------------------------------------
+  async function boot() {
+    const stage = document.getElementById('fb-stage');
+    const bookEl = document.getElementById('fb-book');
+    const { pageW, pageH, isMobile } = sizeBook();
+
+    // Load the PDF first
+    try {
+      pdfDoc = await window.pdfjsLib.getDocument(PDF_URL).promise;
+    } catch (err) {
+      console.error('PDF load failed', err);
+      bookEl.innerHTML = `
+        <div class="fb-leaf" style="display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;color:#333;">
+          Couldn't load the PDF.<br><a href="${PDF_URL}" style="color: var(--asaal-red);">Download it directly →</a>
+        </div>`;
+      return;
+    }
+
+    // Build leaves: [cover, p1, p2, p3, p4, back] => 6 leaves total
+    const leaves = [];
+    leaves.push(makeLeaf(coverLeafHTML()));
+    for (let i = 1; i <= pdfDoc.numPages; i++) {
+      leaves.push(makeLeaf(pdfLeafHTML(i)));
+    }
+    leaves.push(makeLeaf(backLeafHTML()));
+
+    // Initialize StPageFlip
+    flip = new St.PageFlip(bookEl, {
+      width: pageW,
+      height: pageH,
+      size: 'fixed',
+      minWidth: 280,
+      maxWidth: 600,
+      minHeight: 360,
+      maxHeight: 800,
+      maxShadowOpacity: 0.5,
+      showCover: true,
+      mobileScrollSupport: false,
+      usePortrait: isMobile,
+      drawShadow: true,
+      flippingTime: 700,
+      startPage: 0,
+      autoSize: false
+    });
+
+    flip.loadFromHTML(leaves);
+
+    // Wire up controls
+    const total = leaves.length;
+    document.getElementById('fb-total').textContent = total;
+    const slider = document.getElementById('fb-slider');
+    slider.max = total;
+
+    function updateCounter() {
+      const cur = flip.getCurrentPageIndex() + 1;
+      document.getElementById('fb-current').textContent = cur;
+      slider.value = cur;
+      document.getElementById('fb-first').disabled = cur === 1;
+      document.getElementById('fb-prev').disabled  = cur === 1;
+      document.getElementById('fb-next').disabled  = cur === total;
+      document.getElementById('fb-last').disabled  = cur === total;
+      renderVisible();
+    }
+    flip.on('flip', updateCounter);
+    flip.on('init', () => { updateCounter(); renderVisible(); });
+
+    document.getElementById('fb-first').onclick = () => flip.flip(0);
+    document.getElementById('fb-prev').onclick  = () => flip.flipPrev();
+    document.getElementById('fb-next').onclick  = () => flip.flipNext();
+    document.getElementById('fb-last').onclick  = () => flip.flip(total - 1);
+    slider.addEventListener('input', () => flip.flip(parseInt(slider.value, 10) - 1));
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (document.activeElement && /^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+      if (e.key === 'ArrowLeft')  { flip.flipPrev(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { flip.flipNext(); e.preventDefault(); }
+      if (e.key === 'Home')       { flip.flip(0); e.preventDefault(); }
+      if (e.key === 'End')        { flip.flip(total - 1); e.preventDefault(); }
+      if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+      if (e.key === 'Escape' && document.getElementById('fb-fullscreen').classList.contains('is-open')) toggleFullscreen();
+    });
+
+    // Resize
+    let resizeT;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(() => {
+        const { pageW: nw, pageH: nh, isMobile: nm } = sizeBook();
+        // Re-init only on viewport breakpoint change to avoid expensive rebuilds
+        if (nm !== isMobile_state) {
+          isMobile_state = nm;
+          rebuildBook(nw, nh, nm);
+        } else {
+          flip.update({ width: nw, height: nh });
+        }
+      }, 200);
+    });
+
+    // Fullscreen
+    document.getElementById('fb-zoom').onclick = toggleFullscreen;
+    document.getElementById('fb-fs-close').onclick = toggleFullscreen;
+
+    updateCounter();
+  }
+
+  let isMobile_state;
+
+  function rebuildBook(pageW, pageH, isMobile) {
+    // Capture current page so we can restore it
+    const idx = flip.getCurrentPageIndex();
+    flip.destroy();
+    const bookEl = document.getElementById('fb-book');
+    bookEl.innerHTML = '';
+    const leaves = [];
+    leaves.push(makeLeaf(coverLeafHTML()));
+    for (let i = 1; i <= pdfDoc.numPages; i++) leaves.push(makeLeaf(pdfLeafHTML(i)));
+    leaves.push(makeLeaf(backLeafHTML()));
+    flip = new St.PageFlip(bookEl, {
+      width: pageW, height: pageH,
+      size: 'fixed', maxShadowOpacity: 0.5,
+      showCover: true, usePortrait: isMobile,
+      drawShadow: true, flippingTime: 700,
+      startPage: idx, autoSize: false
+    });
+    flip.loadFromHTML(leaves);
+    flip.on('flip', () => {
+      const cur = flip.getCurrentPageIndex() + 1;
+      document.getElementById('fb-current').textContent = cur;
+      document.getElementById('fb-slider').value = cur;
+      renderVisible();
+    });
+    flip.on('init', renderVisible);
+  }
+
+  function toggleFullscreen() {
+    const fs = document.getElementById('fb-fullscreen');
+    const isOpen = fs.classList.contains('is-open');
+    if (isOpen) {
+      fs.classList.remove('is-open');
+      // Move book back to main stage
+      const mainStage = document.getElementById('fb-stage');
+      const book = document.getElementById('fb-book');
+      mainStage.appendChild(book);
+      const { pageW, pageH } = sizeBook();
+      flip.update({ width: pageW, height: pageH });
+    } else {
+      fs.classList.add('is-open');
+      const fsStage = document.getElementById('fb-stage-fs');
+      const book = document.getElementById('fb-book');
+      fsStage.appendChild(book);
+      // Resize for fullscreen
+      const w = Math.min(window.innerWidth * 0.94, window.innerHeight * 1.4);
+      const pageW = w / 2;
+      const pageH = pageW * (11 / 8.5);
+      fsStage.style.width = w + 'px';
+      fsStage.style.height = pageH + 'px';
+      flip.update({ width: pageW, height: pageH });
+      setTimeout(renderVisible, 100);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    isMobile_state = window.innerWidth < 760;
+    boot().catch(err => console.error('boot failed', err));
+  });
+})();
+</script>
+</body>
+</html>
